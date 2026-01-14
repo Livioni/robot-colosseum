@@ -46,6 +46,8 @@ class EnvironmentExt(Environment):
         dyn_random_config: Optional[DynamicsRandomizationConfig] = None,
         attach_grasped_objects: bool = True,
         shaped_rewards: bool = False,
+        arm_max_velocity: float = 1.0,
+        arm_max_acceleration: float = 4.0,
         path_task_ttms: str = DEFAULT_PATH_TTMS,
         env_config: DictConfig = DictConfig({}),
     ):
@@ -82,9 +84,27 @@ class EnvironmentExt(Environment):
                 attach_grasped_objects,
                 shaped_rewards,  # type: ignore
             )
+        elif arg_count == 15:
+            # Using latest RLBench version with arm velocity/acceleration parameters
+            super().__init__(
+                action_mode,
+                dataset_root,
+                obs_config,
+                headless,
+                static_positions,
+                robot_setup,
+                randomize_every,  # type: ignore
+                frequency,
+                vis_random_config,  # type: ignore
+                dyn_random_config,  # type: ignore
+                attach_grasped_objects,
+                shaped_rewards,  # type: ignore
+                arm_max_velocity,  # type: ignore
+                arm_max_acceleration,  # type: ignore
+            )
         else:
             raise RuntimeError(
-                "Unexpected number of arguments in Environment.__init__"
+                f"Unexpected number of arguments in Environment.__init__: {arg_count}"
             )
 
         self._path_task_ttms: str = path_task_ttms

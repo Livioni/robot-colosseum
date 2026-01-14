@@ -1,27 +1,27 @@
 data:
   # Where to save the demos
-  save_path: /tmp/rlbench_data/
+  save_path: datasets/colosseum_data/
   # The size of the images to save
-  image_size: [128, 128]
+  image_size: [640, 480]
   # The renderer to use. Either opengl or opengl3. The first has no shadows
   renderer: opengl3
   # The number of episodes to collect per task
-  episodes_per_task: 5
+  episodes_per_task: 10
   # The image types that will be recorded
   images:
     rgb: True
     depth: True
-    mask: True
-    point_cloud: True
+    mask: False
+    point_cloud: False
   # The cameras that we will be enabled
   cameras:
-    left_shoulder: True
-    right_shoulder: True
-    overhead: True
+    left_shoulder: False
+    right_shoulder: False
+    overhead: False
     wrist: True
-    front: True
+    front: False
   # Store depth as 0 - 1
-  depth_in_meters: False
+  depth_in_meters: True
   # We want to save the masks as rgb encodings.
   masks_as_one_channel: True
 env:
@@ -32,19 +32,19 @@ env:
 
       - variation: object_color
         name: manip_obj_color
-        enabled: False
+        enabled: True
         targets: [hockey_stick]
         seed: ${env.seed}
 
       - variation: object_color
         name: recv_obj_color
-        enabled: False
+        enabled: True
         targets: [hockey_ball]
         seed: ${env.seed}
 
       - variation: object_texture
         name: recv_obj_tex
-        enabled: False
+        enabled: True
         targets: [hockey_ball]
         mapping_mode: 2
         uv_scale: [0.1, 0.1]
@@ -52,39 +52,39 @@ env:
 
       - variation: object_size
         name: manip_obj_size
-        enabled: False
+        enabled: True
         targets: [hockey_stick]
         scale_range: [0.95, 1.05]
         seed: ${env.seed}
 
       - variation: object_size
         name: recv_obj_size
-        enabled: False
+        enabled: True
         targets: [hockey_ball]
         scale_range: [0.75, 1.25]
         seed: ${env.seed}
 
       - variation: light_color
-        enabled: False
+        enabled: True
         targets: [DefaultLightA, DefaultLightB, DefaultLightD]
         color_range: [[0.0, 0.0, 0.0], [0.5, 0.5, 0.5]]
         seed: ${env.seed}
 
       - variation: table_texture
-        enabled: False
+        enabled: True
         seed: ${env.seed}
 
       - variation: table_color
-        enabled: False
+        enabled: True
         color_range: [[0.25, 0.25, 0.25], [1.0, 1.0, 1.0]]
         seed: ${env.seed}
 
       - variation: background_texture
-        enabled: False
+        enabled: True
         seed: ${env.seed}
 
       - variation: distractor_object
-        enabled: False
+        enabled: True
         targets: [spawn_boundary0]
         num_objects: 2
         seed: ${env.seed}
@@ -99,14 +99,14 @@ env:
         seed: ${env.seed}
 
       - variation: object_friction
-        enabled: False
+        enabled: True
         targets: [hockey_ball]
         friction_range: [0.75, 1.0]
         friction_same: True
         seed: ${env.seed}
 
       - variation: object_mass
-        enabled: False
+        enabled: True
         targets: [hockey_ball]
         mass_range: [0.1, 0.5]
         seed: ${env.seed}
