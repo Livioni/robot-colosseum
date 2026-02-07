@@ -2,11 +2,11 @@ data:
   # Where to save the demos
   save_path: datasets/colosseum_data/
   # The size of the images to save
-  image_size: [640, 480]
+  image_size: [1280, 720]
   # The renderer to use. Either opengl or opengl3. The first has no shadows
   renderer: opengl3
   # The number of episodes to collect per task
-  episodes_per_task: 10
+  episodes_per_task: 100
   # The image types that will be recorded
   images:
     rgb: True
@@ -76,15 +76,13 @@ env:
       - variation: distractor_object
         enabled: True
         targets: [spawn_boundary0]
-        num_objects: 3
+        num_objects: 6
         shapes_to_handle: [cup1, cup2, cup3]
         seed: ${env.seed}
 
       - variation: camera_pose
-        enabled: False
-        targets: [cam_front,
-                  cam_over_shoulder_left,
-                  cam_over_shoulder_right]
+        enabled: True
+        targets: [cam_wrist]
         euler_range: [[-0.05, -0.05, -0.05], [0.05, 0.05, 0.05]]
-        position_range: [[-0.1, -0.1, -0.1], [0.1, 0.1, 0.1]]
+        position_range: [[0.0, 0.0, 0.0], [0.0, 0.0, 0.3]]
         seed: ${env.seed}

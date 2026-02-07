@@ -188,13 +188,13 @@ def collect_single_task(task_name: str, save_path: str, episodes_per_task: int =
     # Setup wrist camera pose manager
     cam_manager = None
     if PYREP_AVAILABLE and VisionSensor is not None:
-        try:
-            wrist_cam = VisionSensor("cam_wrist")
-            cam_manager = CameraPositionManager(wrist_cam, CAMERA_OFFSET)
-            cam_manager.save_original()
-            cam_manager.apply_offset()
-        except Exception:
-            cam_manager = None
+        # try:
+        #     wrist_cam = VisionSensor("cam_wrist")
+        #     cam_manager = CameraPositionManager(wrist_cam, CAMERA_OFFSET)
+        #     # cam_manager.save_original()
+        #     # cam_manager.apply_offset()
+        # except Exception:
+        cam_manager = None
 
     task_env = rlbench_env.get_task(task_class)
 
@@ -210,16 +210,12 @@ def collect_single_task(task_name: str, save_path: str, episodes_per_task: int =
     for ex_idx in range(data_cfg.episodes_per_task):
         print(f"Task: {task_env.get_name()} // Demo: {ex_idx}")
 
-        def step_callback(_obs):
-            if cam_manager is not None:
-                cam_manager.apply_offset()
-
         attempts = 10
         demo = None
         while attempts > 0:
             try:
                 (demo,) = task_env.get_demos(
-                    amount=1, live_demos=True, callable_each_step=step_callback
+                    amount=1, live_demos=True,
                 )
                 break
             except Exception:
@@ -243,7 +239,7 @@ def collect_single_task(task_name: str, save_path: str, episodes_per_task: int =
 
 def main():
     # Configuration
-    episodes_per_task = 10  # Number of episodes to collect per task
+    episodes_per_task = 100  # Number of episodes to collect per task
     # 建议用单独目录保存 wrist 的 RGB/Depth/内外参
     save_dir = "datasets/colosseum_wrist_data"
     os.makedirs(save_dir, exist_ok=True)
